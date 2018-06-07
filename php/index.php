@@ -26,63 +26,19 @@
         <option value="seven">Seven</option>
         <option value="stormtrooper">Stormtrooper</option>
     </select>
-    <script type="text/javascript">
-        var player = jQuery('#container');
-        jQuery('#skin-select').change(function () {
-            var test = jQuery('#container[class*="jw-skin"]');
-            var classes = test[0].className.split(" ");
-            var currentClass;
-            for (var j = 0; j <= classes.length; j++) {
-                if (classes[j] != undefined && classes[j].match('jw-skin-')) {
-                    currentClass = classes[j];
-                }
-            }
-            changeSkin(currentClass, jQuery(this).val());
-        });
-
-        function changeSkin(oldSkin, skinName) {
-            jQuery('#container').removeClass(oldSkin);
-            jQuery('#container').addClass('jw-skin-' + skinName);
-        }
-
-        function startPlayer() {
-            var player = jwplayer("container").setup({
-                flashplayer: "/jwplayer/player.swf",
-                playlist: [
-                    {
-                        duration: 32,
-                        file: video,
-                    }
-                ],
-                "playlist.position": "right",
-                "playlist.size": 360,
-                height: 470,
-                width: 720,
-                skin: {
-                    name: 'roundster',
-                    url: '../js/jwplayer-7.11.2/skins/roundster.css'
-                }
-            });
-        }
 
 
-    </script> 
-    
-    <h1>zawgd</h1>
     <?php
-    ini_set('memory_limit', '-1');
+	ini_set('memory_limit', '-1');
+	require_once './dataservice/class.db.php';
+	require_once './objects/class.playlist.php';
+	require_once './objects/class.video.php';
 
-    require_once './dataservice/class.db.php';
-
-    require_once './objects/class.playlist.php';
-    require_once './objects/class.video.php';
-
-    $db = new db();
-
-    //var_dump($db->selectPlaylist(1));
-    
-    var_dump($db->selectVideo(1)->generateJSON());
-    ?>
-    <video id="video"></video>
+	$db = new db();
+	//var_dump($db->selectPlaylist(1));
+	//var_dump($db->selectVideo(1)->generateJSON());
+	?>
+	
+	<video id="video"></video>
 </body>
 </html>
