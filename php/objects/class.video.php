@@ -39,4 +39,8 @@ class video {
     function generateJSON() {
         return '{"id":"'.$this->getVid().'", "bez":"'.$this->getBez().'", "video":"'.base64_encode(($this->getVideo())).'", "vorschaubild":"'.base64_encode(($this->getVorschaubild())).'"}'; 
     }
+    
+    function generateJSONVideoSelection() {
+        return '{"id":"'.$this->getVid().'", "bez":"'.$this->getBez().'", "vorschaubild":"'.base64_encode(($this->getVorschaubild())).'"}'; 
+    }
 } 
