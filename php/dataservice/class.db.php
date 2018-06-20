@@ -129,6 +129,19 @@ class db {
             else return null;
         }
         
+        public function selectAllVideos() {
+            //Parameter in Arrayschreiben für generelle selectfunktion
+            $params = array();
+            
+            $return = $this->preparedStatementSelect("select * from video", $params);
+            
+            $videos = array();
+            foreach ($retrun as $video) {
+                array_push($videos, new video($video->VID, $video->BEZ, $video->VIDEO, $video->VORSCHAUBILD));
+            }
+            return $videos;
+        }
+        
         public function selectPlaylist($pid) {
             //Parameter in Arrayschreiben für generelle selectfunktion
             $params = array();

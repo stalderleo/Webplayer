@@ -46,4 +46,61 @@ class playlist {
             $this->videos[] = $video;
         }
     }
+    
+    function addVideos($video) {
+        if (!($video instanceof video)) {
+            throw new Exception("Die Funktion addVideo(\$video) der Klasse \"playlist\" verlangt als Parameter ein Objekt vom Typ \"video\"");
+        } else {
+            $this->videos[] = $video;
+        }
+    }
+    
+    function generateJSON() {
+        $returnstr = '{"id":"'.$this->getPid().'", "bez":"'.$this->getBez().'", "videos":['; 
+        
+        $videos = $this->getVideos();
+        $i = 0;
+        $len = count($videos);
+        foreach ($videos as $video) {
+            if ($i == $len - 1) {
+                $returnstr.= $video->generateJSON();
+            } else {
+                $returnstr.= $video->generateJSON().",";
+            }
+            $i++;
+        }
+        
+        $returnstr.="]}";
+        return $returnstr;
+    }
+    
+    function generateJSONVideoPaths($paths) {
+        $returnstr = '{"id":"'.$this->getPid().'", "bez":"'.$this->getBez().'", "videos":['; 
+        
+        $videos = $this->getVideos();
+        $i = 0;
+        $len = count($videos);
+        foreach ($videos as $video) {
+            
+            $j = 0;
+            foreach ($paths["vid"] as $path) {
+                if ($path == $video->getVid()) {
+                    $video->setVideo($paths['video'][$j]);
+                    $video->setVorschaubild($paths['vorschaubild'][$j]);
+                    break;
+                }
+                $j++;
+            }
+            
+            if ($i == $len - 1) {
+                $returnstr.= $video->generateJSONWithPaths();
+            } else {
+                $returnstr.= $video->generateJSONWithPaths().",";
+            }
+            $i++;
+        }
+        
+        $returnstr.="]}";
+        return $returnstr;
+    }
 }

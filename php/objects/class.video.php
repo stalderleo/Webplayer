@@ -40,7 +40,15 @@ class video {
         return '{"id":"'.$this->getVid().'", "bez":"'.$this->getBez().'", "video":"'.base64_encode(($this->getVideo())).'", "vorschaubild":"'.base64_encode(($this->getVorschaubild())).'"}'; 
     }
     
-    function generateJSONVideoSelection() {
-        return '{"id":"'.$this->getVid().'", "bez":"'.$this->getBez().'", "vorschaubild":"'.base64_encode(($this->getVorschaubild())).'"}'; 
+    function generateJSONWithPaths() {
+        return '{"id":"'.$this->getVid().'", "bez":"'.$this->getBez().'", "video":"'.$this->getVideo().'", "vorschaubild":"'.$this->getVorschaubild().'"}';  
+    }
+    
+    function setVideo($video) {
+        $this->video = $video;
+    }
+    
+    function setVorschaubild($vorschaubild) {
+        $this->vorschaubild = $vorschaubild;
     }
 } 

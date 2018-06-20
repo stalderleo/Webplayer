@@ -1,4 +1,4 @@
-jQuery(document).ready(function () {
+$(document).ready(function () {
     var player = jQuery('#container');
     jQuery('#skin-select').change(function () {
         var test = jQuery('#container[class*="jw-skin"]');
@@ -40,15 +40,20 @@ function urltoFile(url, filename, mimeType) {
 
 function startPlayer(video) {
     console.log(video);
+    var jsonArr = [];
+    
+    for (var i = 0; i < video.videos.length; i++) {
+        jsonArr.push({
+            file:  video.videos[i].video,
+            image: video.videos[i].vorschaubild,
+            thumbnail: video.videos[i].vorschaubild
+        });
+    }
+    
     var player = jwplayer("container").setup({
         type: "mp4",
         flashplayer: "/jwplayer/player.swf",
-        playlist: [
-            {
-                duration: 32,
-                file: video,
-            }
-        ],
+        playlist: jsonArr,
         "playlist.position": "right",
         "playlist.size": 360,
         height: 470,
@@ -67,12 +72,12 @@ function changeSkin(oldSkin, skinName) {
 
 function html5player() {
     
-    jQuery.ajax({
+    $.ajax({
         type: "POST",
         url: "http://localhost/webplayer/php/dataservice/ajax.getVideo.php",
         data: {
             securekey: "benis",
-            vid: 6
+            vid: 1
         },
         cache: true,
         success: function (data) {
@@ -93,5 +98,24 @@ function html5player() {
 }
 
 function JWPlayer() {
+    $.ajax({
+        type: "POST",
+        url: "http://localhost/webplayer/php/dataservice/ajax.createTempFile.php",
+        data: {
+            securekey: "denis",
+            pid: 1
+        },
+        cache: true,
+        success: function (data) {
+            startPlayer(data);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+        },
+        timeout: 10000
+    });
     
+    startPlayer();
 }
